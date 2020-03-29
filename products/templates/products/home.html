@@ -1,10 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<br/>
+{% for shelter in shelter.all %}
 
-<h1>I AM ALIVE!!!!</h1>
+<div class="row pt-3">
+    <div class="col-2" onclick="window.location='{% url 'detail' shelter.id %}';" style="cursor: pointer;">
+        <img src="{{ shelter.icon.url }}" class="img-fluid" />
+    </div>
+    <div class="col-6" onclick="window.location='{% url 'detail' shelter.id %}';" style="cursor: pointer;">
+        <h3>{{ shelter.title }}</h3>
+        <p>{{ shelter.summary }}</p>
+    </div>
+    <div class="col-4">
+        <a href="javascript:{document.getElementById('upvote{{ shelter.id }}').submit()}"><button class="btn btn-success btn-large btn-block"><span class="oi oi-caret-top"></span>  Upvote {{ shelter.votes_total }}</button></a>
+    </div>
+</div>
 
+<form id="upvote{{ shelter.id }}" method="POST" action="{% url 'upvote' shelter.id %}">
+    {% csrf_token %}
+    <input type="hidden">
+</form>
 
+{% endfor %}
 
 
 {% endblock %}

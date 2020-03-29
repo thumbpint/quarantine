@@ -4,9 +4,10 @@ from .models import Shelter
 from django.utils import timezone
 
 def home(request):
-    return render(request, 'products/home.html')
+    shelter = Shelter.objects
+    return render(request, 'products/home.html', {'shelter':shelter})
 
-@login_required
+@login_required(login_url="/accounts/signup")
 def create(request):
     if request.method == 'POST':
         if request.POST['title'] and request.POST['body'] and request.POST['url'] and request.FILES['icon'] and request.FILES['image']:
@@ -31,3 +32,11 @@ def create(request):
 def detail(request, product_id):
     product = get_object_or_404(Shelter, pk=product_id)
     return render(request, 'products/detail.html', {'shelter':product})
+
+@login_required(login_url="/accounts/signup")
+def upvote(request, product_id):
+    if request.method == 'POST':
+        shelter = get_object_or_404(Shelter, pk=product_id)
+        shelter.votes_total += 1
+        shelter.save()
+        return redirect ('/products/' + str(shelter.id))
