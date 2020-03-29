@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-2">
+        <img src="{{ shelter.icon.url }}" class="img-fluid" />
+    </div>
+    <div class="col-10">
+        <a href="{{ shelter.url }}"><h1 style="color:black">{{ shelter.title }}</h1></a>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-8">
+        <img src="{{ shelter.image.url }}" class="img-fluid" />
+    </div>
+    <div class="col-4">
+        <a href=""><button class="btn btn-success btn-large btn-block"><span class="oi oi-caret-top"></span>  Upvote {{ shelter.votes_total }}</button></a>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-4">
+        <h5>Built by: {{ shelter.builder }}</h5>
+    </div>
+    <div class="col-4 text-right">
+        <h5>{{ shelter.pretty_date }}</h5> 
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        <p>{{ shelter.body }}</p>
+    </div>
+</div>
+
+{% endblock %}
